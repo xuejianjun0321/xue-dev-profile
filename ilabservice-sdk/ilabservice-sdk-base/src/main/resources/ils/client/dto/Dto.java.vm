@@ -1,0 +1,138 @@
+package ${parentPack}.client.dto;
+
+import com.ilabservice.cloud.common.client.dto.BaseServiceDto;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+import java.util.Date;
+import java.util.Set;
+${JavaClassPackages}
+#if(${objectBeanColumnList})
+import java.util.ArrayList;
+import java.util.List;
+#end
+
+/**
+ * ${TsysTables.tableComment} ${fileName}Dto
+ * @author ${author}_自动生成
+ * @date ${datetime}
+ */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+
+
+
+    #if(${objectBeanColumnList})
+    @ApiModel("${moduleName}")
+    public class ${moduleKey}Dto extends BaseServiceDto {
+    #else
+    @ApiModel("${TsysTables.tableComment}")
+    public class ${fileName}Dto extends BaseServiceDto {
+    #end
+
+
+    #foreach ($column in $beanColumns)
+
+        /** $column.column_comment **/
+        #if($column.beanType == "java.lang.Long" || $column.beanType == "java.lang.Integer")
+        @ApiModelProperty(value = "$column.column_comment", example = "0")
+        #else
+        @ApiModelProperty(value = "$column.column_comment")
+        #end
+    private ${column.attrType} ${column.beanName};
+    #end
+
+
+
+    #if(${objectAttributeList})
+        #foreach ($objectColumn in $objectAttributeList)
+
+            private ${objectColumn.aliasName}Dto ${objectColumn.aliasName_a}Dto;
+        #end
+    #end
+
+
+    #if(${objectBeanColumnList})
+        #foreach ($objectColumn in $objectBeanColumnList)
+
+            private List<${objectColumn.aliasName}Dto> ${objectColumn.aliasName_a}DtoList = new ArrayList<${objectColumn.aliasName}Dto>();
+        #end
+    #end
+
+    @ApiModelProperty(value = "id", example = "0")
+    @Override
+    public Long getId() {
+        return super.getId();
+    }
+
+    @ApiModelProperty(value = "创建人id", example = "0")
+    @Override
+    public Long getCreatedBy() {
+        return super.getCreatedBy();
+    }
+
+    @ApiModelProperty(value = "创建时间")
+    @Override
+    public Date getCreatedDate() {
+        return super.getCreatedDate();
+    }
+
+    @ApiModelProperty(value = "最后修改人id", example = "0")
+    @Override
+    public Long getLastModifiedBy() {
+        return super.getLastModifiedBy();
+    }
+
+    @ApiModelProperty(value = "最后修改时间")
+    @Override
+    public Date getLastModifiedDate() {
+        return super.getLastModifiedDate();
+    }
+
+    @ApiModelProperty(value = "企业id", example = "0")
+    @Override
+    public Long getOrgId() {
+        return super.getOrgId();
+    }
+
+    @ApiModelProperty(value = "产品id", example = "0")
+    @Override
+    public Long getProductId() {
+        return super.getProductId();
+    }
+
+    @ApiModelProperty(value = "id数组", example = "[0]")
+    @Override
+    public Set<Long> getIds() {
+        return super.getIds();
+    }
+
+    @ApiModelProperty(value = "大于等于创建时间")
+    @Override
+    public Date getGeCreatedDate() {
+        return super.getGeCreatedDate();
+    }
+
+    @ApiModelProperty(value = "小于等于创建时间")
+    @Override
+    public Date getLeCreatedDate() {
+        return super.getLeCreatedDate();
+    }
+
+    @ApiModelProperty(value = "大于等于最后修改时间")
+    @Override
+    public Date getGeLastModifiedDate() {
+        return super.getGeLastModifiedDate();
+    }
+
+    @ApiModelProperty(value = "小于等于最后修改时间")
+    @Override
+    public Date getLeLastModifiedDate() {
+        return super.getLeLastModifiedDate();
+    }
+
+}

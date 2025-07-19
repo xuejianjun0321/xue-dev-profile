@@ -1,0 +1,105 @@
+package ${parentPack}.service.listener;
+
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
+import com.ilabservice.cloud.flow.client.dto.HistoricTaskDto;
+import com.ilabservice.cloud.flow.client.dto.PageResult;
+import com.ilabservice.cloud.flow.client.enums.FlowStatusEnum;
+import com.ilabservice.cloud.flow.client.service.QueryProcessService;
+import com.ilabservice.cloud.flow.client.service.QueryTaskService;
+import com.ilabservice.cloud.flow.client.vo.FlowVo;
+import com.ilabservice.cloud.flow.client.vo.TaskVo;
+import com.ilabservice.cloud.sdk.base.constants.Constant;
+import ${parentPack}.service.model.entity.${masterTableName};
+import ${parentPack}.service.model.domain.${masterTableName}Domain;
+
+
+import com.ilabservice.cloud.sdk.base.util.RetryUtils;
+import org.apache.dubbo.config.annotation.DubboReference;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.stereotype.Component;
+import lombok.extern.slf4j.Slf4j;
+import javax.annotation.Resource;
+import java.util.Collections;
+
+@Component
+@Slf4j
+    #if(${moduleKey})
+    public class ${moduleKey}FlowMsgListener {
+    #else
+    public class ${fileName}FlowMsgListener {
+    #end
+
+
+    @Resource
+    private ${masterTableName}Domain ${masterTableName_a}Domain;
+
+    /**
+     * 流程实例id
+     */
+    public static final String PROCESS_INSTANCE_ID = "processInstanceId";
+
+
+    /**
+     * 状态
+     */
+    public static final String STATUS = "status";
+
+    @RabbitListener(queues = Constant.FLOW_MSG_QUEUE)
+    public void handleMsg(Message message) {
+        String msg = new String(message.getBody());
+        log.info("工作流消息 开始消费: {}" , message);
+
+
+        JSONObject msgObj = JSONObject.parseObject(msg);
+        String processInstanceId = msgObj.getString(PROCESS_INSTANCE_ID);
+        if (!msgObj.containsKey(PROCESS_INSTANCE_ID)) {
+            log.error("工作流消息缺失流程id msg={}" , msg);
+            return;
+        }
+
+
+        if (!msgObj.containsKey(STATUS)) {
+            log.error("工作流消息缺失流程状态 msg={}" , msg);
+            return;
+        }
+
+
+        ${masterTableName} ${masterTableName_a} =
+        RetryUtils.invoke(() -> ${masterTableName_a}Domain.getOne(new QueryWrapper<${masterTableName}>().lambda()
+                        .eq(${masterTableName}::getProcessInstanceId, processInstanceId)
+                .last("limit 1")),
+                throwable -> log.warn("未查询到业务信息！"), 5,
+                1_000, Collections.singletonList(Exception.class));
+
+        if (ObjectUtils.isEmpty(${masterTableName_a})) {
+            log.error("处理工作流消息，未查询到业务信息 processInstanceId={}" , processInstanceId);
+            throw new RuntimeException("处理工作流消息，未查询到业务信息");
+        }
+
+
+        FlowStatusEnum flowStatusEnum = FlowStatusEnum.get(msgObj.getString(STATUS));
+        switch (flowStatusEnum) {
+            case FLOW_COMPLETE:
+                ${masterTableName_a}.setFlowStatus(flowStatusEnum.getValue());
+                break;
+            case WITHDRAW:
+                ${masterTableName_a}.setFlowStatus(flowStatusEnum.getValue());
+                break;
+            case ROLLBACK:
+                ${masterTableName_a}.setFlowStatus(flowStatusEnum.getValue());
+                break;
+            case REJECT:
+                ${masterTableName_a}.setFlowStatus(flowStatusEnum.getValue());
+            default:
+                log.error("处理工作流消息，未知工作流状态 msg={}" , msg);
+                break;
+        }
+            ${masterTableName_a}Domain.updateById(${masterTableName_a});
+
+
+    }
+
+}

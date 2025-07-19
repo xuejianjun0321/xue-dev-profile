@@ -1,0 +1,16 @@
+package ${parentPack}.service.convertor;
+
+import com.ilabservice.cloud.common.service.convertor.pojo.BaseConvertor;
+import ${parentPack}.client.dto.${fileName}Dto;
+import ${parentPack}.client.vo.${fileName}Vo;
+import ${parentPack}.service.model.entity.${fileName};
+import org.mapstruct.Mapper;
+
+/**
+ * ${TsysTables.tableComment} ${fileName}Convertor
+ * @author ${author}_自动生成
+ * @date ${datetime}
+ */
+@Mapper(componentModel = "spring")
+public interface ${fileName}Convertor extends BaseConvertor<${fileName}, ${fileName}Vo, ${fileName}Dto> {
+}

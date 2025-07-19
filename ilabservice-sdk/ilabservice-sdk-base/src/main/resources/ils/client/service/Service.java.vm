@@ -1,0 +1,85 @@
+package ${parentPack}.client.service;
+
+import com.ilabservice.cloud.common.client.service.BaseService;
+
+    #if(${objectBeanColumnList})
+    import com.baomidou.mybatisplus.core.metadata.IPage;
+    import com.ilabservice.cloud.common.client.page.Page;
+    import ${parentPack}.client.dto.${moduleKey}Dto;
+    import ${parentPack}.client.vo.${moduleKey}Vo;
+    #end
+import ${parentPack}.client.dto.${fileName}Dto;
+
+import org.springframework.validation.annotation.Validated;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * #if(${objectBeanColumnList} || ${objectAttributeList} || ${objectModuleParallelList}) ${moduleName}Service #else ${TsysTables.tableComment} ${fileName}Service #end
+
+ * @author ${author}_自动生成
+ * @date ${datetime}
+ */
+@Validated
+    #if(${objectBeanColumnList} || ${objectAttributeList} || ${objectModuleParallelList})
+    public interface ${moduleKey}Service{
+    #else
+    public interface ${fileName}Service extends BaseService<${fileName}Dto> {
+    #end
+
+    #if(${objectBeanColumnList} || ${objectAttributeList} || ${objectModuleParallelList})
+
+        /**
+         * 保存${moduleName}
+         * @param dto ${moduleKey_a}Dto
+         * @return ${moduleKey_a}Vo
+         */
+            ${moduleKey}Vo save${moduleKey}(${moduleKey}Dto dto);
+
+        /**
+         * 批量保存${moduleName}
+         * @param dtoList ${moduleKey_a}Dto
+         * @return ${moduleKey_a}Vo
+         */
+        List<${moduleKey}Vo> saveOrUpdateBatch(List<${moduleKey}Dto> dtoList);
+
+        /**
+         * 删除${moduleName}
+         * @param dto ${moduleKey_a}Dto
+         * @return ture/false
+         */
+        Boolean del${moduleKey}(${moduleKey}Dto dto);
+
+
+        /**
+         * 批量删除${moduleName}
+         * @param dtoList ${moduleKey_a}Dto
+         * @return ture/false
+         */
+        Boolean delBatch${moduleKey}(List<${moduleKey}Dto> dtoList);
+
+        /**
+         * 获取${moduleName}
+         * @param dto ${moduleKey_a}Dto
+         * @return ${moduleKey_a}Vo
+         */
+            ${moduleKey}Vo get${moduleKey}(${moduleKey}Dto dto);
+
+
+        /**
+         * 获取${moduleName}列表
+         * @param dto ${moduleKey_a}Dto
+         * @return ${moduleKey_a}Vo
+         */
+            List<${moduleKey}Vo> get${moduleKey}List(${moduleKey}Dto dto);
+
+        /**
+         * 分页查询${moduleName}
+         * @param dto ${moduleKey_a}Dto
+         * @return ${moduleKey_a}VoPage
+         */
+        IPage<${moduleKey}Vo> page${moduleKey}(Page<${moduleKey}Dto> page, ${moduleKey}Dto dto);
+    #end
+
+}

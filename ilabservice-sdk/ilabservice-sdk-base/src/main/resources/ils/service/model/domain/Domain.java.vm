@@ -1,0 +1,14 @@
+package ${parentPack}.service.model.domain;
+
+import com.ilabservice.cloud.common.service.model.domain.BaseDomain;
+import ${parentPack}.service.model.entity.${fileName};
+import org.springframework.validation.annotation.Validated;
+
+/**
+ * ${TsysTables.tableComment} ${fileName}Domain
+ * @author ${author}_自动生成
+ * @date ${datetime}
+ */
+@Validated
+public interface ${fileName}Domain extends BaseDomain<${fileName}> {
+}

@@ -1,0 +1,16 @@
+package ${parentPack}.service.model.domain.impl;
+
+import com.ilabservice.cloud.common.service.model.domain.impl.BaseDomainImpl;
+import ${parentPack}.service.model.dao.${fileName}Dao;
+import ${parentPack}.service.model.domain.${fileName}Domain;
+import ${parentPack}.service.model.entity.${fileName};
+import org.springframework.stereotype.Service;
+
+/**
+ * ${TsysTables.tableComment} ${fileName}DomainImpl
+ * @author ${author}_自动生成
+ * @date ${datetime}
+ */
+@Service
+public class ${fileName}DomainImpl extends BaseDomainImpl<${fileName}Dao, ${fileName}> implements ${fileName}Domain {
+}

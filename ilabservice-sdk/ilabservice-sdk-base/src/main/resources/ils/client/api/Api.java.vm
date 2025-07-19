@@ -1,0 +1,54 @@
+package ${parentPack}.client.api;
+
+import com.ilabservice.cloud.common.client.api.BaseApi;
+import ${parentPack}.client.dto.${fileName}Dto;
+import ${parentPack}.client.vo.${fileName}Vo;
+    #if(${objectBeanColumnList})
+    import org.springframework.web.bind.annotation.PostMapping;
+    import com.baomidou.mybatisplus.core.metadata.IPage;
+    import com.ilabservice.cloud.common.client.page.Page;
+    import ${parentPack}.client.dto.${moduleKey}Dto;
+    import ${parentPack}.client.vo.${moduleKey}Vo;
+    #end
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.constraints.NotNull;
+
+/**
+ * #if(${objectBeanColumnList}) ${moduleName}Api #else ${TsysTables.tableComment} ${fileName}Api #end
+
+ * @author ${author}_自动生成
+ * @date ${datetime}
+ */
+
+@Validated
+
+
+    #if(${objectBeanColumnList})
+    @RequestMapping("/secure/${moduleKey_a}")
+    public interface ${moduleKey}Api extends BaseApi<${masterTableName}Vo, ${masterTableName}Dto>{
+    #else
+    @RequestMapping("/secure/${fileName}")
+    public interface ${fileName}Api extends BaseApi<${fileName}Vo, ${fileName}Dto> {
+        @DeleteMapping("/{id}")
+        void deleteById(@NotNull @PathVariable Long id);
+    #end
+
+    #if(${objectBeanColumnList})
+        @PostMapping(value = "/save${moduleKey}")
+            ${moduleKey}Vo save${moduleKey}(${moduleKey}Dto dto);
+
+        @PostMapping(value = "/del${moduleKey}")
+        Boolean del${moduleKey}(${moduleKey}Dto dto);
+
+        @PostMapping(value = "/get${moduleKey}")
+            ${moduleKey}Vo get${moduleKey}(${moduleKey}Dto dto);
+
+        @PostMapping(value = "/page${moduleKey}")
+        IPage<${moduleKey}Vo> page${moduleKey}(Page<${moduleKey}Dto> page, ${moduleKey}Dto dto);
+    #end
+
+}

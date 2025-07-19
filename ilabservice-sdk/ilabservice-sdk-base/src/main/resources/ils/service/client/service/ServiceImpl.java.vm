@@ -1,0 +1,473 @@
+package ${parentPack}.service.client.service;
+
+import cn.hutool.core.util.ObjectUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.ilabservice.cloud.common.client.page.Page;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.ilabservice.cloud.common.service.client.service.BaseServiceImpl;
+import com.ilabservice.cloud.common.service.model.query.BaseQueryWrapper;
+import com.ilabservice.cloud.common.service.model.entity.BaseEntity;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.ilabservice.cloud.common.service.error.AssertUtils;
+import com.ilabservice.cloud.sdk.base.enums.GeneralError;
+import org.springframework.beans.BeanUtils;
+import com.alibaba.fastjson.JSON;
+import com.ilabservice.cloud.sdk.base.util.BeanConvertUtils;
+
+
+    #if(${objectBeanColumnList} || ${objectAttributeList})
+    import cn.hutool.core.collection.CollectionUtil;
+
+    import java.util.ArrayList;
+    import java.util.List;
+    import java.util.stream.Collectors;
+    import java.util.Set;
+    import java.util.Map;
+
+    import ${parentPack}.client.service.${moduleKey}Service;
+    import ${parentPack}.service.model.entity.${masterTableName};
+    import ${parentPack}.client.dto.${masterTableName}Dto;
+    import ${parentPack}.client.vo.${masterTableName}Vo;
+    import ${parentPack}.client.dto.${moduleKey}Dto;
+    import ${parentPack}.client.vo.${moduleKey}Vo;
+    import ${parentPack}.service.model.domain.${masterTableName}Domain;
+        #foreach ($objectColumn in $objectBeanColumnList)
+        import ${parentPack}.service.model.domain.${objectColumn.aliasName}Domain;
+        import ${parentPack}.service.model.entity.${objectColumn.aliasName};
+        import ${parentPack}.client.vo.${objectColumn.aliasName}Vo;
+        #end
+    #else
+    import ${parentPack}.client.service.${fileName}Service;
+    import ${parentPack}.client.vo.${fileName}Vo;
+    import ${parentPack}.client.dto.${fileName}Dto;
+    import ${parentPack}.service.model.entity.${fileName};
+    import ${parentPack}.service.model.query.${fileName}QueryWrapper;
+    #end
+
+    #if(${objectModuleParallelList})
+
+        #foreach ($objectColumn in $objectModuleParallelList)
+        import ${parentPack}.client.service.${objectColumn.aliasName}Service;
+        import ${parentPack}.client.vo.${objectColumn.aliasName}Vo;
+        import ${parentPack}.client.dto.${objectColumn.aliasName}Dto;
+        #end
+    #end
+
+    #if(${objectAttributeList})
+        #foreach ($objectColumn in $objectAttributeList)
+        import ${parentPack}.service.model.domain.${objectColumn.aliasName}Domain;
+        import ${parentPack}.service.model.entity.${objectColumn.aliasName};
+        import ${parentPack}.client.vo.${objectColumn.aliasName}Vo;
+        #end
+    #end
+
+    #if(${processDefinitionKey})
+    import com.ilabservice.cloud.base.client.login.LoginUtils;
+    import com.ilabservice.cloud.common.base.error.CommonError;
+    import org.apache.dubbo.config.annotation.DubboReference;
+    import com.ilabservice.cloud.flow.client.service.OperationProcessService;
+    import com.ilabservice.cloud.flow.client.dto.StartProcessDto;
+    #end
+
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+
+/**
+ * #if(${objectBeanColumnList} || ${objectAttributeList} || ${objectModuleParallelList}) ${moduleName}ServiceImpl #else ${TsysTables.tableComment} ${fileName}ServiceImpl #end
+
+ * @author ${author}_自动生成
+ * @date ${datetime}
+ */
+@Slf4j
+@Service
+    #if(${objectBeanColumnList} || ${objectAttributeList} || ${objectModuleParallelList})
+    public class ${moduleKey}ServiceImpl implements ${moduleKey}Service {
+    #else
+    public class ${fileName}ServiceImpl extends BaseServiceImpl<${fileName}, ${fileName}Vo, ${fileName}Dto> implements ${fileName}Service {
+    #end
+
+    #if(${processDefinitionKey})
+        @DubboReference
+        private OperationProcessService operationProcessService;
+    #end
+
+
+    #if(${objectBeanColumnList} || ${objectAttributeList} || ${objectModuleParallelList})
+
+        @Resource
+        private ${masterTableName}Domain ${masterTableName_a}Domain;
+
+        #foreach ($objectColumn in $objectBeanColumnList)
+            @Resource
+            private ${objectColumn.aliasName}Domain ${objectColumn.aliasName_a}Domain;
+        #end
+
+        #foreach ($objectColumn in $objectAttributeList)
+            @Resource
+            private ${objectColumn.aliasName}Domain ${objectColumn.aliasName_a}Domain;
+        #end
+
+        #foreach ($objectColumn in $objectModuleParallelList)
+            @Resource
+            private ${objectColumn.aliasName}Service ${objectColumn.aliasName_a}Service;
+        #end
+
+    #end
+
+    #if(!${objectBeanColumnList} && !${objectAttributeList} && !${objectModuleParallelList})
+        @Override
+        public BaseQueryWrapper<${fileName}, ${fileName}Dto> getQueryWrapper(${fileName} project, ${fileName}Dto dto) {
+            return new ${fileName}QueryWrapper(project, dto);
+        }
+
+        #if(${processDefinitionKey})
+            @Override
+            public ${fileName}Dto save(${fileName}Dto dto) {
+                StartProcessDto startProcessDto = new StartProcessDto();
+                startProcessDto.setProcessDefinitionKey("${processDefinitionKey}");
+                startProcessDto.setStartAccountId(String.valueOf(LoginUtils.getValidLoginUser().getUserOrg().getId()));
+                String processInstanceId = operationProcessService.start(startProcessDto);
+                AssertUtils.isNotNull(processInstanceId, CommonError.DATA_ERROR, "发起流程失败，请检查流程再提交");
+                dto.setProcessInstanceId(processInstanceId);
+                return this.save(dto);
+            }
+        #end
+
+    #end
+
+    #if(${objectBeanColumnList} || ${objectAttributeList} || ${objectModuleParallelList})
+        @Transactional
+        @Override
+        public  ${moduleKey}Vo save${moduleKey}(${moduleKey}Dto dto) {
+            log.info("${moduleKey}Service save${moduleKey}入参：{}" , JSON.toJSONString(dto));
+                ${moduleKey}Vo vo = new ${moduleKey}Vo();
+
+            AssertUtils.isNotNull(dto, GeneralError.PARAM_ERROR, "参数错误");
+            ${masterTableName} ${masterTableName_a} =new  ${masterTableName}();
+            BeanUtils.copyProperties(dto, ${masterTableName_a});
+            AssertUtils.isNotNull(${masterTableName_a}, GeneralError.PARAM_ERROR, "dto转换异常");
+
+
+            #foreach ($objectColumn in $objectAttributeList)
+                if (ObjectUtil.isNotEmpty(dto.get${objectColumn.aliasName}Dto())) {
+                    ${objectColumn.aliasName} ${objectColumn.aliasName_a} =new ${objectColumn.aliasName}();
+                    BeanUtils.copyProperties(dto.get${objectColumn.aliasName}Dto(),${objectColumn.aliasName_a});
+                    if (ObjectUtil.isNotEmpty(${objectColumn.aliasName_a})) {
+                            ${objectColumn.aliasName_a}Domain.saveOrUpdate(${objectColumn.aliasName_a});
+                        vo.set${objectColumn.aliasName}Vo(BeanConvertUtils.convertTo(${objectColumn.aliasName_a}, ${objectColumn.aliasName}Vo::new));
+                        ${masterTableName_a}.set${objectColumn.aliasName}Id(${objectColumn.aliasName_a}.getId());
+                    }
+                }
+            #end
+
+            #if(${processDefinitionKey})
+                StartProcessDto startProcessDto = new StartProcessDto();
+                startProcessDto.setProcessDefinitionKey("${processDefinitionKey}");
+                startProcessDto.setStartAccountId(String.valueOf(LoginUtils.getValidLoginUser().getUserOrg().getId()));
+                String processInstanceId = operationProcessService.start(startProcessDto);
+                AssertUtils.isNotNull(processInstanceId, CommonError.DATA_ERROR, "发起流程失败，请检查流程再提交");
+                ${masterTableName_a}.setProcessInstanceId(processInstanceId);
+            #end
+
+            boolean save = ${masterTableName_a}Domain.saveOrUpdate(${masterTableName_a});
+            AssertUtils.isTrue(save, GeneralError.PARAM_ERROR, "保存失败");
+            ${masterTableName} byId = ${masterTableName_a}Domain.getById(${masterTableName_a}.getId());
+            AssertUtils.isNotNull(byId, GeneralError.PARAM_ERROR, "未查询到业务数据");
+            BeanUtils.copyProperties(byId, vo);
+
+            #foreach ($objectColumn in $objectBeanColumnList)
+                List<${objectColumn.aliasName}> ${objectColumn.aliasName_a}List = new ArrayList<>();
+                if (CollectionUtil.isNotEmpty(dto.get${objectColumn.aliasName}DtoList())) {
+                    dto.get${objectColumn.aliasName}DtoList().forEach(dto1 -> {
+                        ${objectColumn.aliasName} ${objectColumn.aliasName_a} =new ${objectColumn.aliasName}();
+                        BeanUtils.copyProperties(dto1,${objectColumn.aliasName_a});
+                        ${objectColumn.aliasName_a}.set${masterTableName}Id(byId.getId());
+                            ${objectColumn.aliasName_a}List.add(${objectColumn.aliasName_a});
+                    });
+                }
+                if (CollectionUtil.isNotEmpty(${objectColumn.aliasName_a}List)) {
+                        ${objectColumn.aliasName_a}Domain.saveOrUpdateBatch(${objectColumn.aliasName_a}List);
+                    vo.set${objectColumn.aliasName}List(BeanConvertUtils.convertListTo(${objectColumn.aliasName_a}List, ${objectColumn.aliasName}Vo::new));
+                }
+            #end
+
+            #foreach ($objectColumn in $objectModuleParallelList)
+                List<${objectColumn.aliasName}Dto> ${objectColumn.aliasName_a}List = new ArrayList<>();
+                if (CollectionUtil.isNotEmpty(dto.get${objectColumn.aliasName}DtoList())) {
+                    dto.get${objectColumn.aliasName}DtoList().forEach(dto1 -> {
+                            ${objectColumn.aliasName}Dto ${objectColumn.aliasName_a} = new ${objectColumn.aliasName}Dto();
+                        BeanUtils.copyProperties(dto1,${objectColumn.aliasName_a});
+                        ${objectColumn.aliasName_a}.set${masterTableName}Id(byId.getId());
+                            ${objectColumn.aliasName_a}List.add(${objectColumn.aliasName_a});
+                    });
+                }
+                if (CollectionUtil.isNotEmpty(${objectColumn.aliasName_a}List)) {
+                    vo.set${objectColumn.aliasName}List(${objectColumn.aliasName_a}Service.saveOrUpdateBatch(${objectColumn.aliasName_a}List));
+                }
+            #end
+
+            log.info("${moduleKey}Service save${moduleKey} 执行完成：{}" , JSON.toJSONString(vo));
+            return vo;
+        }
+
+        @Transactional
+        @Override
+        public List<${moduleKey}Vo> saveOrUpdateBatch(List<${moduleKey}Dto> dtoList) {
+            log.info("GiftRecordModelService saveOrUpdateBatch：{}" , JSON.toJSONString(dtoList));
+            AssertUtils.isNotNull(dtoList, GeneralError.PARAM_ERROR, "参数错误");
+            AssertUtils.isTrue(CollectionUtil.isNotEmpty(dtoList), GeneralError.PARAM_ERROR, "参数错误");
+            List<${moduleKey}Vo> voList = new ArrayList<>();
+            dtoList.forEach(dto -> {
+                    ${moduleKey}Vo vo = this.save${moduleKey}(dto);
+                voList.add(vo);
+            });
+
+            return voList;
+        }
+
+
+        @Transactional
+        @Override
+        public Boolean del${moduleKey}(${moduleKey}Dto dto) {
+
+            log.info("${moduleKey}Service del${moduleKey}：{}" , JSON.toJSONString(dto));
+            AssertUtils.isNotNull(dto, GeneralError.PARAM_ERROR, "参数错误");
+
+            ${masterTableName} ${masterTableName_a} =new  ${masterTableName}();
+            ${masterTableName_a}.setId(dto.getId());
+            ${masterTableName_a}.setDataStatus(BaseEntity.DataStatus.INVALID);
+            boolean byId = ${masterTableName_a}Domain.updateById(${masterTableName_a});
+            AssertUtils.isTrue(byId, GeneralError.PARAM_ERROR, "删除失败");
+
+            #foreach ($objectColumn in $objectBeanColumnList)
+                UpdateWrapper<${objectColumn.aliasName}> updateWrapper${objectColumn.aliasName} = new UpdateWrapper<${objectColumn.aliasName}>()
+                        .set("data_status" , BaseEntity.DataStatus.INVALID)
+                        .eq("${masterTableName_a}_id" , dto.getId());
+
+                    ${objectColumn.aliasName_a}Domain.update(updateWrapper${objectColumn.aliasName});
+
+            #end
+
+            #foreach ($objectColumn in $objectModuleParallelList)
+                if (CollectionUtil.isNotEmpty(dto.get${objectColumn.aliasName}DtoList())) {
+                        ${objectColumn.aliasName_a}Service.delBatch${objectColumn.aliasName}(dto.get${objectColumn.aliasName}DtoList());
+                }
+            #end
+
+            log.info("${moduleKey}Service del${moduleKey} 执行完成：{}" , JSON.toJSONString(byId));
+            return true;
+        }
+
+
+        @Transactional
+        @Override
+        public Boolean delBatch${moduleKey}(List<${moduleKey}Dto> dtoList) {
+
+            log.info("${moduleKey}Service delBatch${moduleKey}：{}" , JSON.toJSONString(dtoList));
+            AssertUtils.isNotNull(dtoList, GeneralError.PARAM_ERROR, "参数错误");
+            AssertUtils.isTrue(CollectionUtil.isNotEmpty(dtoList), GeneralError.PARAM_ERROR, "参数错误");
+
+            List<${masterTableName}> ${masterTableName_a}List = new ArrayList<>();
+            dtoList.forEach(dto -> {
+                ${masterTableName} ${masterTableName_a} =new  ${masterTableName}();
+                ${masterTableName_a}.setId(dto.getId());
+                ${masterTableName_a}.setDataStatus(BaseEntity.DataStatus.INVALID);
+                    ${masterTableName_a}List.add(${masterTableName_a});
+            });
+
+            boolean byId = ${masterTableName_a}Domain.updateBatchById(${masterTableName_a}List);
+            AssertUtils.isTrue(byId, GeneralError.PARAM_ERROR, "删除失败");
+
+            #foreach ($objectColumn in $objectBeanColumnList)
+                UpdateWrapper<${objectColumn.aliasName}> updateWrapper${objectColumn.aliasName} = new UpdateWrapper<${objectColumn.aliasName}>()
+                        .set("data_status" , BaseEntity.DataStatus.INVALID)
+                        .in("${masterTableName_a}_id" , dtoList.stream().map(${moduleKey}Dto::getId).
+                                collect(Collectors.toSet()));
+                    ${objectColumn.aliasName_a}Domain.update(updateWrapper${objectColumn.aliasName});
+            #end
+
+            log.info("${moduleKey}Service delBatch${moduleKey} 执行完成：{}" , JSON.toJSONString(byId));
+            return true;
+        }
+
+        @Override
+        public  ${moduleKey}Vo get${moduleKey}(${moduleKey}Dto dto) {
+            log.info("${moduleKey}Service get${moduleKey}：{}" , JSON.toJSONString(dto));
+            AssertUtils.isNotNull(dto, GeneralError.PARAM_ERROR, "参数错误");
+
+            LambdaQueryWrapper<${masterTableName}> queryWrapper = new LambdaQueryWrapper<>();
+            if (ObjectUtil.isNotEmpty(dto.getId())) {
+                queryWrapper.eq(${masterTableName}::getId, dto.getId());
+            }
+            #foreach ($column in $beanColumns)
+                if (ObjectUtil.isNotEmpty(dto.get${column.beanName_A}())) {
+                    queryWrapper.eq(${masterTableName}::get${column.beanName_A}, dto.get${column.beanName_A}());
+                }
+            #end
+                ${masterTableName}Vo ${masterTableName_a}Vo = BeanConvertUtils.convertTo(${masterTableName_a}Domain.getOne(queryWrapper), ${masterTableName}Vo::new);
+            AssertUtils.isNotNull(${masterTableName_a}Vo, GeneralError.PARAM_ERROR, "未查询到业务数据");
+                ${moduleKey}Vo vo = BeanConvertUtils.convertTo(${masterTableName_a}Vo, ${moduleKey}Vo::new);
+
+            #foreach ($objectColumn in $objectBeanColumnList)
+                List<${objectColumn.aliasName}> list${objectColumn.aliasName} = ${objectColumn.aliasName_a}Domain.list(new LambdaQueryWrapper<${objectColumn.aliasName}>()
+                        .eq(${objectColumn.aliasName}::get${masterTableName}Id, ${masterTableName_a}Vo.getId())
+                        .eq(${objectColumn.aliasName}::getDataStatus, BaseEntity.DataStatus.VALID));
+                if (CollectionUtil.isNotEmpty(list${objectColumn.aliasName})) {
+                    vo.set${objectColumn.aliasName}List(BeanConvertUtils.convertListTo(list${objectColumn.aliasName}, ${objectColumn.aliasName}Vo::new));
+                }
+            #end
+
+            #foreach ($objectColumn in $objectModuleParallelList)
+                    ${objectColumn.aliasName}Dto ${objectColumn.aliasName_a} = new ${objectColumn.aliasName}Dto();
+                ${objectColumn.aliasName_a}.set${masterTableName}Id(${masterTableName_a}Vo.getId());
+                vo.set${objectColumn.aliasName}List(${objectColumn.aliasName_a}Service.get${objectColumn.aliasName}List(${objectColumn.aliasName_a}));
+            #end
+
+            #foreach ($objectColumn in $objectAttributeList)
+                ${objectColumn.aliasName} ${objectColumn.aliasName_a} =
+                    ${objectColumn.aliasName_a}Domain.getById(${masterTableName_a}Vo.get${objectColumn.aliasName}Id());
+                vo.set${objectColumn.aliasName}Vo(BeanConvertUtils.convertTo(${objectColumn.aliasName_a}, ${objectColumn.aliasName}Vo::new));
+            #end
+
+            log.info("${moduleKey}Service get${moduleKey} 执行完成：{}" , JSON.toJSONString(vo));
+            return vo;
+        }
+
+        @Override
+        public List<${moduleKey}Vo> get${moduleKey}List(${moduleKey}Dto dto) {
+            log.info("${moduleKey}Service get${moduleKey}List：{}" , JSON.toJSONString(dto));
+            AssertUtils.isNotNull(dto, GeneralError.PARAM_ERROR, "参数错误");
+            List<${moduleKey}Vo> ${moduleKey}vos = new ArrayList<>();
+            LambdaQueryWrapper<${masterTableName}> queryWrapper = new LambdaQueryWrapper<>();
+            if (ObjectUtil.isNotEmpty(dto.getId())) {
+                queryWrapper.eq(${masterTableName}::getId, dto.getId());
+            }
+            #foreach ($column in $beanColumns)
+                if (ObjectUtil.isNotEmpty(dto.get${column.beanName_A}())) {
+                    queryWrapper.eq(${masterTableName}::get${column.beanName_A}, dto.get${column.beanName_A}());
+                }
+            #end
+
+            List<${masterTableName}Vo> ${masterTableName_a}VoList = BeanConvertUtils.convertListTo(${masterTableName_a}Domain.list(queryWrapper), ${masterTableName}Vo::new);
+            AssertUtils.isNotNull(${masterTableName_a}VoList, GeneralError.PARAM_ERROR, "未查询到业务数据");
+            Set<Long> ${masterTableName_a}IdList = ${masterTableName_a}VoList.stream().map(${masterTableName}Vo::getId).collect(Collectors.toSet());
+            #foreach ($objectColumn in $objectBeanColumnList)
+                List<${objectColumn.aliasName}> ${objectColumn.aliasName_a}List = ${objectColumn.aliasName_a}Domain.list(new LambdaQueryWrapper<${objectColumn.aliasName}>()
+                        .in(${objectColumn.aliasName}::get${masterTableName}Id, ${masterTableName_a}IdList)
+                        .eq(${objectColumn.aliasName}::getDataStatus, BaseEntity.DataStatus.VALID));
+                Map<Long, List<${objectColumn.aliasName}>> groupBy${objectColumn.aliasName} = ${objectColumn.aliasName_a}List.stream().collect(Collectors.groupingBy(${objectColumn.aliasName}::get${masterTableName}Id))
+                ;
+
+            #end
+
+                ${masterTableName_a}VoList.forEach(${masterTableName_a}Vo -> {
+                    ${moduleKey}Vo recordVo = BeanConvertUtils.convertTo(${masterTableName_a}Vo, ${moduleKey}Vo::new);
+
+                #foreach ($objectColumn in $objectAttributeList)
+                    ${objectColumn.aliasName} ${objectColumn.aliasName_a} =
+                        ${objectColumn.aliasName_a}Domain.getById(${masterTableName_a}Vo.get${objectColumn.aliasName}Id());
+                    recordVo.set${objectColumn.aliasName}Vo(BeanConvertUtils.convertTo(${objectColumn.aliasName_a}, ${objectColumn.aliasName}Vo::new));
+                #end
+
+                #foreach ($objectColumn in $objectBeanColumnList)
+                    recordVo.set${objectColumn.aliasName}List(BeanConvertUtils.convertListTo(
+                            BeanConvertUtils.convertListTo(groupBy${objectColumn.aliasName}.get(${masterTableName_a}Vo.getId()),
+                        ${objectColumn.aliasName}::new), ${objectColumn.aliasName}Vo::new));
+                #end
+                    ${moduleKey}vos.add(recordVo);
+            });
+            return ${moduleKey}vos;
+        }
+
+        @Override
+        public IPage<${moduleKey}Vo> page${moduleKey}(Page<${moduleKey}Dto> page, ${moduleKey}Dto dto) {
+
+            log.info("${moduleKey}Service page${moduleKey}：page={},dto={}" , JSON.toJSONString(page), JSON.toJSONString(dto));
+            LambdaQueryWrapper<${masterTableName}> queryWrapper = new LambdaQueryWrapper<>();
+            #foreach ($column in $beanColumns)
+                if (ObjectUtil.isNotEmpty(dto.get${column.beanName_A}())) {
+                    queryWrapper.eq(${masterTableName}::get${column.beanName_A}, dto.get${column.beanName_A}());
+                }
+            #end
+            if (ObjectUtil.isNotEmpty(dto.getId())) {
+                queryWrapper.eq(${masterTableName}::getId, dto.getId());
+            }
+            if (ObjectUtil.isNotEmpty(dto.getGeCreatedDate())) {
+                queryWrapper.ge(BaseEntity::getCreatedDate, dto.getGeCreatedDate());
+            }
+            if (ObjectUtil.isNotEmpty(dto.getLeCreatedDate())) {
+                queryWrapper.le(BaseEntity::getCreatedDate, dto.getLeCreatedDate());
+            }
+            if (ObjectUtil.isNotEmpty(dto.getGeLastModifiedDate())) {
+                queryWrapper.ge(BaseEntity::getLastModifiedDate, dto.getGeLastModifiedDate());
+            }
+            if (ObjectUtil.isNotEmpty(dto.getLeLastModifiedDate())) {
+                queryWrapper.le(BaseEntity::getLastModifiedDate, dto.getLeLastModifiedDate());
+            }
+            queryWrapper.orderByDesc(${masterTableName}::getCreatedDate);
+            IPage<${masterTableName}> ipage = ${masterTableName_a}Domain.page(new Page<>(page.getCurrent(), page.getSize()), queryWrapper);
+            if (ObjectUtil.isEmpty(ipage) || CollectionUtil.isEmpty(ipage.getRecords())) {
+                return new Page<>();
+            }
+
+            List<${moduleKey}Vo> ${moduleKey_a}Vos = new ArrayList<>();
+
+            Set<Long> ${masterTableName_a}IdList = ipage.getRecords().stream().map(${masterTableName}::getId).
+            collect(Collectors.toSet());
+
+            #foreach ($objectColumn in $objectBeanColumnList)
+                List<${objectColumn.aliasName}> ${objectColumn.aliasName_a}List = ${objectColumn.aliasName_a}Domain.list(new LambdaQueryWrapper<${objectColumn.aliasName}>()
+                        .in(${objectColumn.aliasName}::get${masterTableName}Id, ${masterTableName_a}IdList)
+                        .eq(${objectColumn.aliasName}::getDataStatus, BaseEntity.DataStatus.VALID));
+                Map<Long, List<${objectColumn.aliasName}>> groupBy${objectColumn.aliasName} = ${objectColumn.aliasName_a}List.stream().collect(Collectors.groupingBy(${objectColumn.aliasName}::get${masterTableName}Id))
+                ;
+
+            #end
+
+            ipage.getRecords().forEach(${masterTableName_a} ->{
+                    ${moduleKey}Vo vo = BeanConvertUtils.convertTo(${masterTableName_a}, ${moduleKey}Vo::new);
+
+                #foreach ($objectColumn in $objectBeanColumnList)
+                    if (ObjectUtil.isEmpty(vo) || CollectionUtil.isEmpty(groupBy${objectColumn.aliasName}.get(${masterTableName_a}.getId())))
+                    {
+                        return;
+                    }
+                    vo.set${objectColumn.aliasName}List(BeanConvertUtils.convertListTo(
+                            BeanConvertUtils.convertListTo(groupBy${objectColumn.aliasName}.get(${masterTableName_a}.getId()),
+                        ${objectColumn.aliasName}::new), ${objectColumn.aliasName}Vo::new));
+                #end
+
+                #foreach ($objectColumn in $objectModuleParallelList)
+                        ${objectColumn.aliasName}Dto ${objectColumn.aliasName_a} = new ${objectColumn.aliasName}Dto();
+                    ${objectColumn.aliasName_a}.set${masterTableName}Id(${masterTableName_a}.getId());
+                    List<${objectColumn.aliasName}Vo> ${objectColumn.aliasName_a}List = ${objectColumn.aliasName_a}Service.get${objectColumn.aliasName}List(${objectColumn.aliasName_a});
+                    vo.set${objectColumn.aliasName}List(BeanConvertUtils.convertListTo(
+                            BeanConvertUtils.convertListTo(${objectColumn.aliasName_a}List,
+                                        ${objectColumn.aliasName}Vo::new), ${objectColumn.aliasName}Vo::new));
+                #end
+
+
+
+                #foreach ($objectColumn in $objectAttributeList)
+                    ${objectColumn.aliasName} ${objectColumn.aliasName_a} =
+                        ${objectColumn.aliasName_a}Domain.getById(${masterTableName_a}.get${objectColumn.aliasName}Id())
+                    ;
+                    vo.set${objectColumn.aliasName}Vo(BeanConvertUtils.convertTo(${objectColumn.aliasName_a}, ${objectColumn.aliasName}Vo::new));
+                #end
+                    ${moduleKey_a}Vos.add(vo);
+            });
+
+            Page<${moduleKey}Vo> ${moduleKey_a}VoPage = new Page<${moduleKey}Vo>(page.getSize(), page.getCurrent()).setTotal(ipage.getTotal()).setRecords(${moduleKey_a}Vos);
+
+            log.info("${moduleKey}Service page${moduleKey} 执行完成：{}" , JSON.toJSONString(${moduleKey_a}VoPage));
+            return ${moduleKey_a}VoPage;
+        }
+
+
+    #end
+
+}

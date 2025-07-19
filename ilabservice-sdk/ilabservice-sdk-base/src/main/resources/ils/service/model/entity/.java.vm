@@ -1,0 +1,32 @@
+package ${parentPack}.service.model.entity;
+
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.ilabservice.cloud.common.service.model.entity.BaseServiceEntity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+${JavaClassPackages}
+/**
+ * ${TsysTables.tableComment} ${fileName}
+ * @author ${author}_自动生成
+ * @date ${datetime}
+ */
+@Data
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
+@TableName(autoResultMap = true)
+#if(${objectBeanColumnList})
+public class ${moduleKey} extends BaseServiceEntity{
+#else
+public class ${fileName} extends BaseServiceEntity{
+#end
+
+#foreach ($column in $beanColumns)
+
+/** $column.column_comment **/
+private ${column.attrType} ${column.beanName};
+#end
+
+
+
+}

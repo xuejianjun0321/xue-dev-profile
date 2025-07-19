@@ -1,0 +1,16 @@
+package ${parentPack}.service.model.dao;
+
+import com.ilabservice.cloud.common.service.model.dao.BaseDao;
+import ${parentPack}.service.model.entity.${fileName};
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
+
+/**
+ * ${TsysTables.tableComment} ${fileName}Dao
+ * @author ${author}_自动生成
+ * @date ${datetime}
+ */
+@Mapper
+@Repository
+public interface ${fileName}Dao extends BaseDao<${fileName}> {
+}

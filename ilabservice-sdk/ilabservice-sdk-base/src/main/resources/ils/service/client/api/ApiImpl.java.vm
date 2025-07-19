@@ -1,0 +1,126 @@
+package ${parentPack}.service.client.api;
+
+import com.ilabservice.cloud.common.service.client.api.BaseApiImpl;
+import ${parentPack}.client.dto.${fileName}Dto;
+import ${parentPack}.client.vo.${fileName}Vo;
+import ${parentPack}.service.model.entity.${fileName};
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.RestController;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.ilabservice.cloud.common.client.page.Page;
+
+
+    #if(${objectBeanColumnList})
+    import ${parentPack}.client.dto.${moduleKey}Dto;
+    import ${parentPack}.client.api.${moduleKey}Api;
+    import ${parentPack}.client.vo.${masterTableName}Vo;
+    import ${parentPack}.client.vo.${moduleKey}Vo;
+    import javax.annotation.Resource;
+
+    import ${parentPack}.client.service.${moduleKey}Service;
+    #else
+    import ${parentPack}.client.api.${fileName}Api;
+    #end
+
+import java.util.List;
+
+/**
+ * #if(${objectBeanColumnList}) ${moduleName}ApiImpl #else ${TsysTables.tableComment} ${fileName}ApiImpl #end
+
+ * @author ${author}_自动生成
+ * @date ${datetime}
+ */
+@RestController
+
+    #if(${objectBeanColumnList})
+    @Api(tags = "${moduleName}")
+    public class ${moduleKey}ApiImpl extends BaseApiImpl<${masterTableName}, ${masterTableName}Vo, ${masterTableName}Dto> implements ${moduleKey}Api {
+    #else
+    @Api(tags = "${TsysTables.tableComment}")
+    public class ${fileName}ApiImpl extends BaseApiImpl<${fileName}, ${fileName}Vo, ${fileName}Dto> implements ${fileName}Api {
+    #end
+
+
+
+    #if(${objectBeanColumnList})
+
+        @Resource
+        private ${moduleKey}Service ${moduleKey_a}Service;
+
+
+        @Override
+        @ApiOperation("新增${moduleName}")
+        public ${moduleKey}Vo save${moduleKey}(${moduleKey}Dto dto) {
+            return ${moduleKey_a}Service.save${moduleKey}(dto);
+        }
+
+        @Override
+        @ApiOperation("删除${moduleName}")
+        public Boolean del${moduleKey}(${moduleKey}Dto dto) {
+            return ${moduleKey_a}Service.del${moduleKey}(dto);
+        }
+
+        @Override
+        @ApiOperation("获取${moduleName}详情")
+        public ${moduleKey}Vo get${moduleKey}(${moduleKey}Dto dto) {
+            return ${moduleKey_a}Service.get${moduleKey}(dto);
+        }
+
+        @Override
+        @ApiOperation("分页查询${moduleName}列表")
+        public IPage<${moduleKey}Vo> page${moduleKey}(Page<${moduleKey}Dto> page, ${moduleKey}Dto dto) {
+            return ${moduleKey_a}Service.page${moduleKey}(page, dto);
+        }
+
+    #else
+        @ApiOperation("新增${TsysTables.tableComment}")
+        @Override
+        public ${fileName}Vo save(${fileName}Dto dto) {
+            return super.save(dto);
+        }
+
+        @ApiOperation("删除${TsysTables.tableComment}")
+        @ApiImplicitParams({
+                @ApiImplicitParam(name = "id", value = "id", required = true)
+        })
+        @Override
+        public void deleteById(Long id) {
+            super.delete((${fileName}Dto) new ${fileName}Dto().setId(id));
+        }
+
+        @ApiOperation("编辑${TsysTables.tableComment}")
+        @ApiImplicitParams({
+                @ApiImplicitParam(name = "id", value = "id", required = true)
+        })
+        @Override
+        public ${fileName}Vo saveById(Long id, ${fileName}Dto dto) {
+            return super.saveById(id, dto);
+        }
+
+        @ApiOperation("查询单个${TsysTables.tableComment}")
+        @Override
+        public ${fileName}Vo one(${fileName}Dto dto) {
+            return super.one(dto);
+        }
+
+        @ApiOperation("查询列表${TsysTables.tableComment}")
+        @Override
+        public List<${fileName}Vo> list(${fileName}Dto dto) {
+            return super.list(dto);
+        }
+
+        @ApiOperation("查询分页${TsysTables.tableComment}")
+        @ApiImplicitParams({
+                @ApiImplicitParam(name = "pageSize", value = "每页条数", required = true),
+                @ApiImplicitParam(name = "pageNum", value = "第几页", required = true)
+        })
+        @Override
+        public IPage<${fileName}Vo> page(Page<${fileName}Dto> page, ${fileName}Dto dto) {
+            return super.page(page, dto);
+        }
+    #end
+
+}

@@ -1,0 +1,44 @@
+package ${parentPack}.service.model.query;
+
+import com.ilabservice.cloud.common.service.model.query.BaseQueryWrapper;
+
+#if(${objectBeanColumnList})
+
+import ${parentPack}.client.dto.${moduleKey}Dto;
+import ${parentPack}.service.model.entity.${moduleKey};
+
+/**
+ * ${TsysTables.tableComment} ${moduleName}QueryWrapper
+ * @author ${author}_自动生成
+ * @date ${datetime}
+ */
+public class ${moduleKey}QueryWrapper extends BaseQueryWrapper<${moduleKey}, ${moduleKey}Dto> {
+    public ${moduleKey}QueryWrapper(${moduleKey} entity) {
+        super(entity);
+    }
+
+    public ${moduleKey}QueryWrapper(${moduleKey} entity, ${moduleKey}Dto dto) {
+        super(entity, dto);
+    }
+}
+
+#else
+
+import ${parentPack}.client.dto.${fileName}Dto;
+        import ${parentPack}.service.model.entity.${fileName};
+
+/**
+ * ${TsysTables.tableComment} ${fileName}QueryWrapper
+ * @author ${author}_自动生成
+ * @date ${datetime}
+ */
+public class ${fileName}QueryWrapper extends BaseQueryWrapper<${fileName}, ${fileName}Dto> {
+    public ${fileName}QueryWrapper(${fileName} entity) {
+        super(entity);
+    }
+
+    public ${fileName}QueryWrapper(${fileName} entity, ${fileName}Dto dto) {
+        super(entity, dto);
+    }
+}
+#end

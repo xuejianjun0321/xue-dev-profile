@@ -1,0 +1,27 @@
+package ${parentPack}.client.vo;
+
+import java.io.Serializable;
+
+import lombok.Data;
+import com.alibaba.excel.annotation.ExcelProperty;
+${JavaClassPackages}
+/**
+ * ${TsysTables.tableComment} ${fileName}
+ * @author ${author}_自动生成
+ * @date ${datetime}
+ */
+@Data
+    #if(${objectBeanColumnList})
+    public class ${moduleKey}ExcelVo implements Serializable{
+    #else
+    public class ${fileName}ExcelVo implements Serializable{
+    #end
+
+    #foreach ($column in $beanColumns)
+        /** $column.column_comment **/
+        #set($b = $velocityCount - 1)
+        @ExcelProperty(value = "$column.column_comment", index = $b)
+        private ${column.attrType} ${column.beanName};
+    #end
+
+}

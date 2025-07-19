@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.ilabservice.cloud</groupId>
+        <artifactId>ilabservice-cloud-parent</artifactId>
+        <version>1.2.9-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.ilabservice.cloud.sdk</groupId>
+    <artifactId>ilabservice-sdk</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.4-SNAPSHOT</version>
+    <modules>
+        <module>ilabservice-sdk-base</module>
+        <module>ilabservice-sdk-config</module>
+        <module>ilabservice-sdk-extra</module>
+    </modules>
+
+    <properties>
+        <ilabservice-sdk>1.0.4-SNAPSHOT</ilabservice-sdk>
+        <ilabservice-cloud>1.2.9-SNAPSHOT</ilabservice-cloud>
+        <!-- 环境配置 -->
+        <jdk.version>1.8</jdk.version>
+        <java.encoding>UTF-8</java.encoding>
+        <project.build.sourceEncoding>${java.encoding}</project.build.sourceEncoding>
+        <productionMode>false</productionMode>
+
+    </properties>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.ilabservice.cloud.sdk</groupId>
+                <artifactId>ilabservice-sdk-base</artifactId>
+                <version>${ilabservice-sdk}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ilabservice.cloud.sdk</groupId>
+                <artifactId>ilabservice-sdk-config</artifactId>
+                <version>${ilabservice-sdk}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ilabservice.cloud.sdk</groupId>
+                <artifactId>ilabservice-sdk-extra</artifactId>
+                <version>${ilabservice-sdk}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                    <encoding>UTF-8</encoding>
+                    <compilerArgs>
+                        <arg>-parameters</arg><!-- 这个参数是设置JDK1.8编译时在class文件中生成方法的参数名称 -->
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <includes>
+                        <include>**/*Test*.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>3.0.0-M4</version>
+                <configuration>
+                    <autoResolveSnapshots>1</autoResolveSnapshots>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <tagNameFormat>@{project.version}</tagNameFormat>
+                    <arguments>-DskipTests</arguments>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                    <include>**/*.vm</include>
+                </includes>
+            </resource>
+        </resources>
+
+    </build>
+
+    <repositories>
+        <repository>
+            <id>nexus</id>
+            <name>nexus</name>
+            <url>https://nexus3.devops.intelab.cloud/repository/maven-public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>releases</name>
+            <url>https://nexus3.devops.intelab.cloud/repository/maven-public/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>SnapShots</name>
+            <url>https://nexus3.devops.intelab.cloud/repository/maven-public/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+</project>

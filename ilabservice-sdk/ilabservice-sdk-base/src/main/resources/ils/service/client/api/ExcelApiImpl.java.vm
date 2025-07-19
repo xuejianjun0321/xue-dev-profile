@@ -1,0 +1,183 @@
+package ${parentPack}.service.client.api;
+
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.json.JSONUtil;
+import com.ilabservice.cloud.common.service.error.AssertUtils;
+import com.ilabservice.cloud.common.service.utils.OssUtils;
+import com.ilabservice.cloud.common.service.model.entity.BaseEntity;
+import com.ilabservice.cloud.sdk.base.enums.GeneralError ;
+import com.ilabservice.cloud.sdk.base.util.BeanConvertUtils;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import org.apache.commons.collections4.CollectionUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import ${parentPack}.client.dto.${masterTableName}Dto;
+import ${parentPack}.service.model.entity.${masterTableName};
+import ${parentPack}.client.vo.${masterTableName}ExcelVo;
+import ${parentPack}.client.vo.${masterTableName}Vo;
+import ${parentPack}.client.api.${masterTableName}ExcelApi;
+import ${parentPack}.service.model.domain.${masterTableName}Domain;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import com.alibaba.fastjson.JSON;
+
+import javax.servlet.http.HttpServletResponse;
+
+import com.alibaba.excel.EasyExcel;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import lombok.extern.slf4j.Slf4j;
+import com.alibaba.excel.write.metadata.style.WriteCellStyle;
+import com.alibaba.excel.write.metadata.style.WriteFont;
+import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
+import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
+import com.alibaba.google.common.net.HttpHeaders;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.Resource;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Date;
+import java.util.ArrayList;
+import java.io.IOException;
+
+/**
+ *  ${fileName}ExcelApiImpl
+ * @author ${author}_自动生成
+ * @date ${datetime}
+ */
+@Slf4j
+@RestController
+@Api(tags = "${TsysTables.tableComment}ExcelApi")
+public class ${masterTableName}ExcelApiImpl implements ${masterTableName}ExcelApi {
+
+    @Resource
+    private ${masterTableName}Domain ${masterTableName_a}Domain;
+
+
+    @ApiOperation("下载${masterTableName}模板")
+    @Override
+    public void downloadExcelTemplate(HttpServletResponse response) {
+        try {
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            response.setCharacterEncoding("utf-8");
+            String encodedFileName = URLEncoder.encode("${masterTableName}导入模板", StandardCharsets.UTF_8.name()).replaceAll("\\+", "%20");
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename*=utf-8''" + encodedFileName + ".xlsx");
+            List<${masterTableName}ExcelVo> ${masterTableName_a}ExcelVos = new ArrayList<>();
+
+            EasyExcel.write(response.getOutputStream(), ${masterTableName}ExcelVo.class)
+                    .registerWriteHandler(getHeightAndFontStrategy())
+                    .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+                    .sheet(0).doWrite(${masterTableName_a}ExcelVos);
+        } catch (IOException e) {
+            log.error("download ${masterTableName}ExcelApiImpl  template error", e);
+            AssertUtils.isTrue(false, GeneralError.PARAM_ERROR, "下载模板失败");
+        }
+    }
+
+    @ApiOperation("导入${TsysTables.tableComment}Excel")
+    @Override
+    public Boolean importExcel(MultipartFile file) {
+        log.info("${masterTableName}ExcelApi importExcel 开始");
+        AssertUtils.isNotNull(file, GeneralError.PARAM_ERROR, "参数错误");
+        String fileName = file.getOriginalFilename();
+        AssertUtils.isTrue(fileName.endsWith(".xlsx"), GeneralError.PARAM_ERROR, "请上传xlsx格式文件");
+
+        // 解析Excel
+        List<${masterTableName}ExcelVo> ${masterTableName_a}ExcelVoList;
+        try {
+                ${masterTableName_a}ExcelVoList = EasyExcel.read(file.getInputStream())
+                    .headRowNumber(1).head(${masterTableName}ExcelVo.class).sheet().doReadSync();
+        } catch (IOException e) {
+            log.error("${masterTableName}ExcelApiImpl解析Excel 发生异常 e={}", e.getMessage());
+            return false;
+        }
+        log.info("${masterTableName}ExcelApiImpl 解析结果：{}", JSONUtil.toJsonStr(${masterTableName_a}ExcelVoList));
+        AssertUtils.isTrue(CollectionUtils.isNotEmpty(${masterTableName_a}ExcelVoList), GeneralError.PARAM_ERROR, "未解析到Excel内容");
+
+            ${masterTableName_a}ExcelVoList.forEach(${masterTableName_a}ExcelVo -> {
+            // 校验非空值
+            #foreach ($column in $beanColumns)
+                #if($column.is_nullable)
+                    AssertUtils.isTrue(ObjectUtil.isNotEmpty(${masterTableName_a}ExcelVo.get${column.beanName_A}()), GeneralError.PARAM_ERROR, "${column.beanName_A}不能为空");
+                #end
+            #end
+        });
+
+
+        List<${masterTableName}> ${masterTableName_a}List = BeanConvertUtils.convertListTo(${masterTableName_a}ExcelVoList, ${masterTableName}::new)
+        ;
+        if (CollectionUtil.isNotEmpty(${masterTableName_a}List)) {
+                ${masterTableName_a}Domain.saveOrUpdateBatch(${masterTableName_a}List);
+        }
+        log.info("完成${masterTableName}ExcelApiImpl导入！");
+        return true;
+    }
+
+    @ApiOperation("导出${TsysTables.tableComment}Excel 记录")
+    @Override
+    public void export${masterTableName}(${masterTableName}Dto dto, HttpServletResponse response) {
+        log.info("${masterTableName}ExcelApi export${masterTableName}  导出开始 {}", JSON.toJSONString(dto));
+        LambdaQueryWrapper<${masterTableName}> queryWrapper = new LambdaQueryWrapper<>();
+        if (ObjectUtil.isNotEmpty(dto.getId())) {
+            queryWrapper.eq(${masterTableName}::getId, dto.getId());
+        }
+        #foreach ($column in $beanColumns)
+            if (ObjectUtil.isNotEmpty(dto.get${column.beanName_A}())) {
+                queryWrapper.eq(${masterTableName}::get${column.beanName_A}, dto.get${column.beanName_A}());
+            }
+        #end
+        if (ObjectUtil.isNotEmpty(dto.getGeCreatedDate())) {
+            queryWrapper.ge(BaseEntity::getCreatedDate, dto.getGeCreatedDate());
+        }
+        if (ObjectUtil.isNotEmpty(dto.getLeCreatedDate())) {
+            queryWrapper.le(BaseEntity::getCreatedDate, dto.getLeCreatedDate());
+        }
+        if (ObjectUtil.isNotEmpty(dto.getGeLastModifiedDate())) {
+            queryWrapper.ge(BaseEntity::getLastModifiedDate, dto.getGeLastModifiedDate());
+        }
+        if (ObjectUtil.isNotEmpty(dto.getLeLastModifiedDate())) {
+            queryWrapper.le(BaseEntity::getLastModifiedDate, dto.getLeLastModifiedDate());
+        }
+        queryWrapper.orderByDesc(${masterTableName}::getCreatedDate);
+        List<${masterTableName}Vo> ${masterTableName_a}Vos = BeanConvertUtils.convertListTo(${masterTableName_a}Domain.list(queryWrapper), ${masterTableName}Vo::new);
+        AssertUtils.isNotNull(${masterTableName_a}Vos, GeneralError.PARAM_ERROR, "未查询到业务数据");
+
+        try {
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            String fileName = URLEncoder.encode("${TsysTables.tableComment}" + DateUtil.current(), "UTF-8");
+            response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
+            response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+            EasyExcel.write(response.getOutputStream(), ${masterTableName}Vo.class).sheet("${TsysTables.tableComment}").doWrite(${masterTableName_a}Vos);
+        } catch (Exception e) {
+            log.error(" ${masterTableName}ExcelApiImpl export${masterTableName} export error", e);
+            AssertUtils.isTrue(false, GeneralError.PARAM_ERROR, "导出失败");
+        }
+    }
+
+    /**
+     * 自定义Excel导出策略，设置表头和数据行的字体和高度
+     *
+     * @return Excel导出策略
+     */
+    private HorizontalCellStyleStrategy getHeightAndFontStrategy() {
+        WriteCellStyle headWriteCellStyle = new WriteCellStyle();
+        WriteFont headWriteFont = new WriteFont();
+        headWriteFont.setFontHeightInPoints((short) 11);
+        headWriteFont.setBold(true);
+        headWriteCellStyle.setWriteFont(headWriteFont);
+        WriteCellStyle contentWriteCellStyle = new WriteCellStyle();
+        WriteFont contentWriteFont = new WriteFont();
+        contentWriteFont.setFontHeightInPoints((short) 11);
+        contentWriteCellStyle.setWriteFont(contentWriteFont);
+        contentWriteCellStyle.setHorizontalAlignment(HorizontalAlignment.CENTER);
+        return new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
+    }
+}
