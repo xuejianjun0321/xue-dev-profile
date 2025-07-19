@@ -20,6 +20,4 @@ iLabService-sdk: springboot 拓展工具包
 
 iLabService-sdk 几乎所有功能都采取插件化处理，以注解和配置文件，在启动类配置即可
 
-### > 对接说明
-https://intelab.yuque.com/productsteam/projects/uxcmgz
 
