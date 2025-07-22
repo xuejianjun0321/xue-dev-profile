@@ -3,233 +3,213 @@
 **Current Location:** Berlin, Germany  
 **Email:** kunorxue@gmail.com  
 **Visa:** German Opportunity Card  
-**LinkedIn:** [https://www.linkedin.com/in/jianjunxue37/](https://www.linkedin.com/in/jianjunxue37/)
+**GitHub:** [github.com/xuejianjun0321/xue-dev-profile](https://github.com/xuejianjun0321/xue-dev-profile)  
+**LinkedIn:** [linkedin.com/in/jianjunxue37](https://www.linkedin.com/in/jianjunxue37/)
 
 ---
 
 ## Professional Summary
 
-Java developer with 9+ years of hands-on experience contributing to large-scale fintech and e-commerce platforms,
-including 3 years with Alipay and 2 years with NetEase Kaola. Strong expertise in cloud computing, SaaS architecture (4+
-years), distributed systems, and low-code platform design. Passionate about engineering excellence, high-quality code,
-and continuous innovation.
+Java developer with 9+ years of hands-on experience contributing to large-scale fintech and e-commerce platforms, including 3 years with Alipay and 2 years with NetEase Kaola. Strong expertise in cloud computing, SaaS architecture (4+ years), distributed systems, and low-code platform design. Passionate about engineering excellence, high-quality code, and continuous innovation.
 
 ---
 
 ## Work Experience
 
-### Senior Java Developer | Zhejiang Shipu Technology Co., Ltd. | Jun 2022 – Jul 2023
+### **Senior Java Developer**  
+**Zhejiang Shipu Technology Co., Ltd.** | *Jun 2022 – Jul 2023*  
+- Developed and maintained backend systems across multiple enterprise digital transformation projects  
+- Extracted reusable modules into lightweight SDKs to improve code modularity and reuse  
+- Built an internal code generation tool for automating standard CRUD scaffolding  
+- Designed and implemented a NoSQL-based low-code configuration system with real-time updates, multilingual support, and role-based access  
+- Applied DDD principles to define clean module boundaries (user, auth, workflow, configuration)  
+- Results: Increased development efficiency by 50%; enabled zero-downtime configuration deployment  
+**Tech Stack:** Java 11, Spring Boot, Spring Cloud, MongoDB, MySQL, Redis, Kafka, RocketMQ, Docker, Kubernetes, Jenkins  
 
-- Developed and maintained backend systems across multiple enterprise digital transformation projects
-- Extracted reusable modules into lightweight SDKs to improve code modularity and reuse
-- Built an internal code generation tool for automating standard CRUD scaffolding
-- Designed and implemented a NoSQL-based low-code configuration system with real-time updates, multilingual support, and
-  role-based access
-- Applied DDD principles to define clean module boundaries (user, auth, workflow, configuration)
-- ⚡ Results: Increased standard development efficiency by 50%; enabled zero-downtime deployment for configurations  
-  **Tech Stack:** Java 11, Spring Boot, Spring Cloud, MongoDB, MySQL, Redis, Kafka, RocketMQ, Docker, Kubernetes,
-  Jenkins
+---
 
-### Java Architect | Hangzhou Tianyan Intelligent Technology Co., Ltd. | May 2021 – Mar 2022
+### **Java Architect**  
+**Hangzhou Tianyan Intelligent Technology Co., Ltd.** | *May 2021 – Mar 2022*  
+- Designed architecture and led core development of an AI-powered global waste trading platform  
+- Built a technical team from scratch; established coding standards and CI/CD pipelines  
+- Delivered MVP within 3 months including AI, contract, account, messaging, and multilingual modules  
+- Ensured elastic deployment, observability, and team collaboration  
+**Tech Stack:** Java, Spring Boot, MyBatis, RocketMQ, Redis, Docker, Jenkins, Nginx, Alibaba Cloud  
 
-- Designed architecture and led core development of an AI-powered global waste trading platform
-- Built a technical team from scratch; established coding standards and CI/CD pipelines
-- Delivered MVP within 3 months including AI, contract, account, messaging, and multilingual translation modules
-- Ensured elastic deployment, observability, and team collaboration across modules  
-  **Tech Stack:** Java, Spring Boot, MyBatis, RocketMQ, Redis, Docker, Jenkins, Nginx, Alibaba Cloud
+---
 
-### Java Development Expert | Hangzhou Tiangu Information Technology Co., Ltd. | Dec 2019 – Apr 2021
+### **Java Development Expert**  
+**Hangzhou Tiangu Information Technology Co., Ltd.** | *Dec 2019 – Apr 2021*  
+- Led architecture and development of an enterprise-grade low-code platform  
+- Delivered workflow engine, form builder, reporting dashboards, and visual configuration  
+- Developed 7 systems in 1 year, wrote 120,000+ LOC, and filed 2 technical patents  
+- *Results:* 3× efficiency gain; ~342 man-days saved  
+**Tech Stack:** Java 8, Spring Boot, Flowable, MyBatis, EasyRule, Groovy, Elasticsearch  
 
-- Led architecture and development of an enterprise-grade low-code platform
-- Delivered components for workflow engine, form builder, reporting dashboards, and visual configuration
-- Developed 7 systems in 1 year, contributed over 120,000 lines of code, and filed 2 technical patents
-- ⚡ Results: 3× efficiency gain; saved ~342 man-days in development time  
-  **Tech Stack:** Java 8, Spring Boot, Flowable, MyBatis, EasyRule, Groovy, Elasticsearch
+---
 
-### Senior Java Developer | NetEase Wuwei Bear Technology Co., Ltd. | Aug 2017 – Jun 2019
-
-- Migrated monolithic transaction system to modular microservices for high-concurrency scenarios
-- Designed and implemented monitoring, risk control, A/B testing, and load balancing strategies
+### **Senior Java Developer**  
+**NetEase Wuwei Bear Technology Co., Ltd.** | *Aug 2017 – Jun 2019*  
+- Migrated monolithic transaction system to modular microservices for high-concurrency workloads  
+- Implemented monitoring, risk control, A/B testing, and load balancing  
 - Migrated from Oracle to DDB + RDS with zero downtime; boosted TPS from 800 to 3000+  
-  **Tech Stack:** Java 7, Spring, MyBatis, Oracle, Redis, Kafka, RabbitMQ
+**Tech Stack:** Java 7, Spring, MyBatis, Oracle, Redis, Kafka, RabbitMQ  
 
-### Java Developer | Ant Financial (Ant Group) | Jun 2014 – Jul 2017
+---
 
-- Designed and implemented core modules for offline billing and accounting systems for Ant Fortune
-- Processed massive datasets using ODPS SQL and Shell scripting for ETL and reconciliation tasks
+### **Java Developer**  
+**Ant Financial (Ant Group)** | *Jun 2014 – Jul 2017*  
+- Designed and implemented core modules for offline billing and accounting systems for Ant Fortune  
+- Processed massive datasets using ODPS SQL and Shell scripting for ETL and reconciliation tasks  
 - Optimized processing time from 12 hours to under 40 minutes  
-  **Tech Stack:** Java 5, Spring, Shell, ODPS SQL, Oracle, RabbitMQ, Redis, Ehcache
-
-### Career Transition (Jul 2023 – Present)
-
-- Improved English communication skills and studied German job market and visa policies
-- Successfully obtained a German Opportunity Card and relocated to Berlin
-- Actively learning local workplace culture, technical expectations, and integration strategies
+- Maintained internal configuration and monitoring pages, including layout adjustments and content updates using HTML, CSS, and JavaScript  
+- Supported frontend developers with bug fixes and UI adjustments in embedded admin tools, ensuring consistent cross-browser UX  
+**Tech Stack:** Java 5, Spring, Shell, ODPS SQL, Oracle, RabbitMQ, Redis, Ehcache, HTML, CSS, JavaScript 
 
 ---
 
-## Language Skills
+##  Career Transition (Jul 2023 – Present)
 
-- Chinese: Native
-- English: Basic communication, actively improving
-- German: Beginner
+- Improved English communication skills and studied German job market and visa policies  
+- Successfully obtained a German Opportunity Card and relocated to Berlin  
+- Actively learning local workplace culture, technical expectations, and integration strategies  
 
 ---
 
-## Education
+## ️ Language Skills
 
-**B.Sc. in Computer Science and Technology** | Changchun Normal University
+- **Chinese:** Native  
+- **English:** Basic communication, actively improving  
+- **German:** Beginner  
+
+---
+
+##  Education
+
+**B.Sc. in Computer Science and Technology**  
+Changchun Normal University  
 
 ---
 
 ## Certifications
 
-- Senior Software Engineer
-- Senior Database Management Engineer
-- Senior Teaching Certificate
+- Senior Software Engineer  
+- Senior Database Management Engineer  
+- Senior Teaching Certificate  
 
 ---
 
 ## Patents
 
-Holder of 3 technical patents related to batch fund yield computation, low-code workflow prediction using rule engines,
-and real-time data syncing with Groovy & ElasticSearch.
+Holder of 3 technical patents related to batch fund yield computation, low-code workflow prediction using rule engines, and real-time data syncing with Groovy & ElasticSearch.
 
 ---
 
 ## Objective
 
-Seeking a full-time Java developer position in Germany, where I can contribute my extensive experience in scalable
-backend systems and SaaS architecture. Willing to undertake a 1 to 3-month unpaid internship or probation period to
-demonstrate my professional skills and work value.
+Seeking a full-time Java developer position in Germany, where I can contribute my extensive experience in scalable backend systems and SaaS architecture. Willing to undertake a 1 to 3-month unpaid internship or probation period to demonstrate my professional skills and work value.
 
----
 
 ---
 
 # Jianjun Xue
 
-**Wohnort:** Berlin, Deutschland  
-**E-Mail:** kunorxue@gmail.com  
-**Visum:** Chancenkarte (Opportunity Card)  
-**LinkedIn:** [https://www.linkedin.com/in/jianjunxue37/](https://www.linkedin.com/in/jianjunxue37/)
+**📍 Wohnort:** Berlin, Deutschland  
+**✉ E-Mail:** kunorxue@gmail.com  
+**📄 Visum:** Chancenkarte (Opportunity Card)  
+**🌐 GitHub:** [github.com/xuejianjun0321/xue-dev-profile](https://github.com/xuejianjun0321/xue-dev-profile)  
+**🔗 LinkedIn:** [linkedin.com/in/jianjunxue37](https://www.linkedin.com/in/jianjunxue37/)
 
 ---
 
 ## 🧑‍💻 Berufliches Profil
 
-Java-Entwickler mit über 9 Jahren Berufserfahrung in der Entwicklung großskaliger FinTech- und E-Commerce-Systeme,
-darunter 3 Jahre bei Alipay und 2 Jahre bei NetEase Kaola. Umfangreiche Erfahrung in Cloud-Computing, SaaS-Architektur (
-4+ Jahre), verteilten Systemen und Low-Code-Plattformen. Engagiert für hochwertige Softwareentwicklung und
-kontinuierliche technologische Innovation.
+Java-Entwickler mit über 9 Jahren Erfahrung in der Entwicklung großskaliger FinTech- und E-Commerce-Systeme, darunter 3 Jahre bei Alipay und 2 Jahre bei NetEase Kaola. Umfangreiche Kenntnisse in Cloud-Computing, SaaS-Architektur (4+ Jahre), verteilten Systemen und Low-Code-Plattformen. Engagiert für qualitativ hochwertige Softwareentwicklung und kontinuierliche technologische Innovation.
 
 ---
 
 ## 💼 Berufserfahrung
 
-### **Senior Java Entwickler**
+### **Senior Java Entwickler**  
+**Zhejiang Shipu Technology Co., Ltd.** | *Juni 2022 – Juli 2023*  
+- Entwicklung und Wartung von Backend-Systemen für digitale Transformationsprojekte  
+- Wiederverwendbare Funktionen in SDKs extrahiert  
+- Low-Code-Konfigurationsplattform mit RBAC und Live-Updates entwickelt  
+- ⚡ Ergebnis: 50 % höhere Entwicklungseffizienz, keine Downtime bei Änderungen  
+**Tech:** Java 11, Spring Boot, MongoDB, Redis, Kafka, Docker, K8s
 
-**Zhejiang Shipu Technology Co., Ltd. | Juni 2022 – Juli 2023**
+### **Java Architekt**  
+**Hangzhou Tianyan Intelligent Technology Co., Ltd.** | *Mai 2021 – März 2022*  
+- Architekturdesign für KI-gestützte Handelsplattform  
+- Aufbau des Teams, CI/CD, MVP-Launch in 3 Monaten  
+**Tech:** Java, Spring Boot, Docker, Jenkins, Alibaba Cloud
 
-- Entwicklung und Wartung von Backend-Systemen für mehrere digitale Transformationsprojekte
-- Extrahierung wiederverwendbarer Funktionen in leichte SDKs zur Verbesserung der Modularität
-- Aufbau eines internen Code-Generators zur Automatisierung standardisierter CRUD-Module
-- Entwicklung einer NoSQL-basierten Low-Code-Konfigurationsplattform mit Mehrsprachigkeit, RBAC und Echtzeit-Updates
-- Anwendung von Domain-Driven Design (DDD) zur Definition klarer Modulgrenzen
-- ⚡ **Ergebnis:** Entwicklungseffizienz um über 50 % gesteigert; Konfigurationsänderungen ohne Downtime möglich  
-  **Technologien:** Java 11, Spring Boot, Spring Cloud, MongoDB, MySQL, Redis, Kafka, RocketMQ, Docker, Kubernetes,
-  Jenkins
+### **Java Entwicklungsexperte**  
+**Hangzhou Tiangu Information Technology Co., Ltd.** | *Dez. 2019 – Apr. 2021*  
+- Aufbau einer Low-Code-Plattform (Formulare, Workflows, Berichte)  
+- 7 Systeme in einem Jahr, 120.000+ LOC, 2 Patente  
+**Tech:** Java 8, Spring Boot, Flowable, MyBatis, EasyRule, Groovy, Elasticsearch
 
----
+### **Senior Java Entwickler**  
+**NetEase Wuwei Bear Technology Co., Ltd.** | *Aug. 2017 – Juni 2019*  
+- Migration zu Microservices, Performanceboost (TPS: 800 → 3000+)  
+- Risikokontrolle, Monitoring und Traffic-Routing  
+**Tech:** Java 7, MyBatis, Oracle, Kafka, Redis, RabbitMQ
 
-### **Java Architekt**
-
-**Hangzhou Tianyan Intelligent Technology Co., Ltd. | Mai 2021 – März 2022**
-
-- Architekturentwurf und Leitung der Kernentwicklung einer KI-basierten Abfallhandelsplattform
-- Aufbau des technischen Teams, Einführung von CI/CD, Qualitätsstandards und Entwicklungsrichtlinien
-- Entwicklung eines MVP in 3 Monaten inkl. KI-Modul, Kontoverwaltung, Vertrag, Übersetzung, Echtzeit-Kommunikation
-- Sicherstellung von elastischem Deployment, Überwachung und Teamkollaboration  
-  **Technologien:** Java, Spring Boot, MyBatis, RocketMQ, Redis, Docker, Jenkins, Nginx, Alibaba Cloud
-
----
-
-### **Java Entwicklungsexperte**
-
-**Hangzhou Tiangu Information Technology Co., Ltd. | Dez. 2019 – Apr. 2021**
-
-- Leitung der Architektur und Entwicklung einer unternehmensweiten Low-Code-Plattform
-- Entwicklung von Workflow-Engines, Formular-Design, Bericht-Dashboards, Drag-and-Drop-Konfiguration
-- Entwicklung von 7 Systemen in einem Jahr, über 120.000 Zeilen Code, 2 technische Patente angemeldet
-- ⚡ **Ergebnis:** 3-fache Effizienzsteigerung, 342 Arbeitstage eingespart  
-  **Technologien:** Java 8, Spring Boot, Flowable, MyBatis, EasyRule, Groovy, Elasticsearch
+### **Java Entwickler**  
+**Ant Financial (Ant Group)** | *Juni 2014 – Juli 2017*  
+- Offline-Abrechnungssystem entwickelt (Ant Fortune)  
+- ODPS SQL & Shell-Skripte zur Massendatenverarbeitung  
+- Abrechnung von 12 h auf 40 min optimiert  
+- Pflege interner Seiten mit **HTML, CSS, JavaScript** (Layout, Inhalte)  
+- UI-Bugfixes und Anpassung in Admin-Tools, konsistentes UX sichergestellt  
+**Tech:** Java 5, Spring, ODPS SQL, Shell, Oracle, RabbitMQ, Redis, Ehcache, HTML, CSS, JS
 
 ---
 
-### **Senior Java Entwickler**
+## 🔁 Berufliche Neuorientierung (seit Juli 2023)
 
-**NetEase Wuwei Bear Technology Co., Ltd. | Aug. 2017 – Juni 2019**
-
-- Modularisierung und Service-Architektur für ein hochverfügbares E-Commerce-Transaktionssystem
-- Implementierung von Überwachung, Risikokontrolle, A/B-Tests und Traffic-Routing
-- Datenmigration von Oracle zu DDB + RDS; TPS von 800 auf über 3000 gesteigert  
-  **Technologien:** Java 7, Spring, MyBatis, Oracle, Redis, Kafka, RabbitMQ
+- Verbesserung der Sprachkenntnisse (Englisch/Deutsch)  
+- Umzug nach Berlin mit deutscher Chancenkarte  
+- Aktive Integration in den Arbeitsmarkt, Verständnis lokaler Technologien und Kultur
 
 ---
 
-### **Java Entwickler**
+## 🗣 Sprachkenntnisse
 
-**Ant Financial (Ant Group) | Juni 2014 – Juli 2017**
-
-- Entwicklung des Offline-Abrechnungssystems für Ant Fortune
-- Verarbeitung großer Datenmengen mittels ODPS SQL und Shell-Skripting für Abrechnung und Datenabgleich
-- Optimierung der Abrechnungsdauer von 12 Stunden auf 40 Minuten  
-  **Technologien:** Java 5, Spring, Shell, ODPS SQL, Oracle, RabbitMQ, Redis, Ehcache
-
----
-
-## 🔄 Berufliche Neuorientierung (seit Juli 2023)
-
-- Verbesserung der Englischkenntnisse und Einarbeitung in den deutschen Arbeitsmarkt und Visasysteme
-- Erfolgreicher Erhalt der deutschen Chancenkarte und Umzug nach Berlin
-- Aktive Auseinandersetzung mit deutscher Unternehmenskultur, Technologiestandards und Integrationsstrategien
-
----
-
-## 🌍 Sprachkenntnisse
-
-- **Chinesisch:** Muttersprache
-- **Englisch:** Grundkenntnisse, in aktiver Verbesserung
-- **Deutsch:** Anfänger
+- **Chinesisch:** Muttersprache  
+- **Englisch:** Grundkenntnisse, in aktiver Verbesserung  
+- **Deutsch:** Anfänger (A1)
 
 ---
 
 ## 🎓 Ausbildung
 
-**Bachelor in Informatik**  
-*Changchun Normal University (China)*
+**Bachelor in Informatik** – Changchun Normal University (China)
 
 ---
 
-## 📜 Zertifikate
+## 🧾 Zertifikate
 
-- Senior Software Engineer
-- Senior Database Management Engineer
+- Senior Software Engineer  
+- Senior Database Management Engineer  
 - Pädagogisches Lehrzertifikat (höherer Grad)
 
 ---
 
-## 🧠 Patente
+## 🧪 Patente
 
-Inhaber von 3 technischen Patenten im Bereich Low-Code-Konfiguration, Big-Data-Berechnungen und dynamische
-Datenintegration mit Groovy & ElasticSearch.
+Inhaber von 3 technischen Patenten im Bereich:  
+- Low-Code-Konfiguration  
+- Regelbasierte Prozessmodellierung  
+- Echtzeit-Datenabgleich mit Groovy & ElasticSearch
 
 ---
 
-## 🎯 Ziel / Objective
+## 🎯 Zielsetzung
 
-Ich suche eine Vollzeitstelle als Java-Entwickler in Deutschland, um meine umfassende Erfahrung in skalierbaren Backend-Systemen und SaaS-Architekturen einzubringen. Ich bin bereit, ein unbezahltes Praktikum oder eine Probezeit von 1 bis 3 Monaten zu absolvieren, um meine fachlichen Fähigkeiten und meinen Wert für das Unternehmen unter Beweis zu stellen.
----
+Ich suche eine Vollzeitstelle als Java-Entwickler in Deutschland, um meine Erfahrung in skalierbaren Backend-Systemen und SaaS-Architekturen einzubringen.  
+Ich bin bereit, ein unbezahltes Praktikum oder eine Probezeit von 1 bis 3 Monaten zu absolvieren, um meine Fähigkeiten unter Beweis zu stellen.
 
 ---
 
